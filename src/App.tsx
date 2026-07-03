@@ -22,6 +22,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const router = createBrowserRouter([
   {
+    path : '/',
     element: <MainLayout />,
     children: [
       { path: '/', element: <HomePage /> },
@@ -33,8 +34,13 @@ const router = createBrowserRouter([
       { path: '/pricing', element: <PricingPage /> },
       { path: '/case-studies-2', element: <CaseStudiesPage /> },
     ],
+
   },
-])
+],
+  {
+      basename: "/word-press-convert",
+  }
+)
 
 export default function App() {
   return <RouterProvider router={router} />
