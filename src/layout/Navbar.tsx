@@ -1,30 +1,37 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../images/docalign-pnz85o4s8x1va7og9rruwpsvi6u966jrvexgy56ry8.png'
-
-const navItems = [
-  {
-    label: 'Typesetting and Formatting',
-    children: [{ label: 'How It Works', to: '/how-docalign-works' }, { label: 'Pricing', to: '/pricing' }],
-  },
-  { label: 'Custom Software Solutions', to: '/devservices' },
-  { label: 'Additional Services', to: '/additional' },
-  {
-    label: 'About Us',
-    children: [
-      { label: 'Contact Us', to: '/contact-us' },
-      { label: 'Case Studies', to: '/case-studies-2' },
-      { label: 'LinkedIn' },
-      { label: 'Facebook' },
-    ],
-  },
-  { label: 'Blog', to: '/blog-2' },
-]
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { setLanguage } from '../store/language'
+import { layoutTranslations } from '../translations/layout'
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [lang, setLang] = useState<'EN' | 'DE'>('EN')
+  const dispatch = useAppDispatch()
+  const language = useAppSelector((state) => state.language.current)
+  const t = layoutTranslations[language]
+
+  const navItems = [
+    {
+      label: t.nav.typesetting,
+      to: '/typesetting/',
+      children: [{ label: t.nav.howItWorks, to: '/how-docalign-works' }, { label: t.nav.pricing, to: '/pricing' }],
+    },
+    { label: t.nav.customSoftware, to: '/devservices' },
+    { label: t.nav.additionalServices, to: '/additional' },
+    {
+      label: t.nav.aboutUs,
+      to: '/about-us/',
+      children: [
+        { label: t.nav.contactUs, to: '/contact-us' },
+        { label: t.nav.caseStudies, to: '/case-studies-2' },
+        { label: t.nav.linkedin },
+        { label: t.nav.facebook },
+      ],
+    },
+    { label: t.nav.blog, to: '/blog-2' },
+  ]
 
   return (
     <header className="w-full bg-white shadow-sm sticky top-0 z-50">
@@ -56,12 +63,17 @@ export default function Navbar() {
               onMouseEnter={() => item.children && setOpenMenu(item.label)}
               onMouseLeave={() => setOpenMenu(null)}
             >
-              {!item.children && item.to ? (
+              {item.to ? (
                 <Link
                   to={item.to}
                   className="flex items-center gap-1.5 py-2 text-sm font-medium text-gray-700 hover:text-[#e8722a] transition-colors whitespace-nowrap"
                 >
                   {item.label}
+                  {item.children && (
+                    <svg className="w-3.5 h-3.5 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
                 </Link>
               ) : (
                 <button className="flex items-center gap-1.5 py-2 text-sm font-medium text-gray-700 hover:text-[#e8722a] transition-colors whitespace-nowrap">
@@ -101,17 +113,17 @@ export default function Navbar() {
 
           {/* Language toggle */}
           <div className="flex items-center ml-4 border border-gray-200 rounded-full overflow-hidden text-xs font-semibold">
-            {(['EN', 'DE'] as const).map((l) => (
+            {(['en', 'de'] as const).map((l) => (
               <button
                 key={l}
-                onClick={() => setLang(l)}
+                onClick={() => dispatch(setLanguage(l))}
                 className={`px-3 py-1.5 transition-colors ${
-                  lang === l
+                  language === l
                     ? 'bg-[#0d2b4e] text-white'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                {l}
+                {l.toUpperCase()}
               </button>
             ))}
           </div>
@@ -138,7 +150,7 @@ export default function Navbar() {
         <div className="lg:hidden border-t border-gray-100 bg-white">
           {navItems.map((item) => (
             <div key={item.label}>
-              {!item.children && item.to ? (
+              {item.to ? (
                 <Link
                   to={item.to}
                   onClick={() => setMobileOpen(false)}
@@ -170,17 +182,17 @@ export default function Navbar() {
             </div>
           ))}
           <div className="px-4 py-3 flex gap-2">
-            {(['EN', 'DE'] as const).map((l) => (
+            {(['en', 'de'] as const).map((l) => (
               <button
                 key={l}
-                onClick={() => setLang(l)}
+                onClick={() => dispatch(setLanguage(l))}
                 className={`px-3 py-1 text-xs font-semibold rounded-full border ${
-                  lang === l
+                  language === l
                     ? 'bg-[#0d2b4e] text-white border-[#0d2b4e]'
                     : 'text-gray-600 border-gray-300'
                 }`}
               >
-                {l}
+                {l.toUpperCase()}
               </button>
             ))}
           </div>

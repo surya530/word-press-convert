@@ -1,19 +1,6 @@
 import logo from '../images/docalign-pnz85o4s8x1va7og9rruwpsvi6u966jrvexgy56ry8.png'
-
-const companyLinks = [
-  { label: 'About Us', href: '#' },
-  { label: 'Services', href: '#' },
-  { label: 'Our Team', href: '#' },
-  { label: 'Careers', href: '#' },
-  { label: 'Contact Us', href: '#' },
-]
-
-const resourceLinks = [
-  { label: 'Blog', href: '#' },
-  { label: 'Help Center / FAQ', href: '#' },
-  { label: 'Press Kit', href: '#' },
-  { label: 'Case Studies', href: '#' },
-]
+import { useAppSelector } from '../store/hooks'
+import { layoutTranslations } from '../translations/layout'
 
 function FacebookIcon() {
   return (
@@ -42,6 +29,9 @@ function LinkedInIcon() {
 }
 
 export default function Footer() {
+  const language = useAppSelector((state) => state.language.current)
+  const t = layoutTranslations[language].footer
+
   return (
     <footer className="bg-[#1e2228] text-white">
       <div className="max-w-7xl mx-auto px-12 md:px-24 py-16">
@@ -59,17 +49,17 @@ export default function Footer() {
               />
             </a>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
-              Providing high-quality typesetting, formatting, and document conversion solutions to empower creators and developers around the world.
+              {t.description}
             </p>
           </div>
 
           {/* Company links */}
           <div className="flex flex-col gap-5">
-            <h3 className="text-base font-semibold text-white tracking-wide">Company</h3>
+            <h3 className="text-base font-semibold text-white tracking-wide">{t.companyHeading}</h3>
             <ul className="flex flex-col gap-3">
-              {companyLinks.map(({ label, href }) => (
+              {t.companyLinks.map((label) => (
                 <li key={label}>
-                  <a href={href} className="text-sm text-gray-400 hover:text-white transition-colors duration-200">
+                  <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-200">
                     {label}
                   </a>
                 </li>
@@ -79,11 +69,11 @@ export default function Footer() {
 
           {/* Resources links */}
           <div className="flex flex-col gap-5">
-            <h3 className="text-base font-semibold text-white tracking-wide">Resources</h3>
+            <h3 className="text-base font-semibold text-white tracking-wide">{t.resourcesHeading}</h3>
             <ul className="flex flex-col gap-3">
-              {resourceLinks.map(({ label, href }) => (
+              {t.resourceLinks.map((label) => (
                 <li key={label}>
-                  <a href={href} className="text-sm text-gray-400 hover:text-white transition-colors duration-200">
+                  <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors duration-200">
                     {label}
                   </a>
                 </li>
@@ -99,10 +89,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
           <p>
-            &copy; {new Date().getFullYear()} DocAlign.{' '}
-            <a href="#" className="hover:text-white transition-colors duration-200">Privacy Policy</a>
+            &copy; {new Date().getFullYear()} {t.copyrightSuffix}{' '}
+            <a href="#" className="hover:text-white transition-colors duration-200">{t.privacyPolicy}</a>
             {' | '}
-            <a href="#" className="hover:text-white transition-colors duration-200">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors duration-200">{t.termsOfService}</a>
           </p>
           <div className="flex items-center gap-5">
             <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-white transition-colors duration-200">

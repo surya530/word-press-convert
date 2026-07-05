@@ -1,3 +1,5 @@
+import PageHero from '../components/PageHero'
+
 const outputFormats = ['Print PDF', 'Online PDF', 'EPUB (eBook)', 'AZW (Amazon eBook)', 'HTML', 'Other']
 
 const publicationTypes = ['Book', 'Magazine', 'Trade Journal', 'Catalog', 'Other']
@@ -13,16 +15,11 @@ export default function ContactUsPage() {
   return (
     <div className="bg-linear-to-b from-gray-50 to-white px-6 py-16 sm:px-12 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-10 text-center sm:mb-14">
-          <span className="mb-3 inline-block text-xs font-semibold tracking-[0.2em] text-[#e8722a] uppercase">
-            Get In Touch
-          </span>
-          <h1 className="text-3xl font-bold text-[#0d2b4e] sm:text-4xl">Contact Us</h1>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-gray-500 sm:text-base">
-            Please provide us with some information about your company — this will help us to find the best
-            solution for you.
-          </p>
-        </div>
+        <PageHero
+          eyebrow="Get In Touch"
+          title="Contact Us"
+          subtitle="Please provide us with some information about your company — this will help us to find the best solution for you."
+        />
 
         <form className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xl shadow-gray-200/50 sm:p-10">
           <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">

@@ -8,6 +8,8 @@ import BlogPage from './pages/BlogPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import PricingPage from './pages/PricingPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
+import TypesettingPage from './pages/TypesettingPage';
+import AboutUsPage from './pages/AboutUsPage';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -33,6 +35,8 @@ const router = createBrowserRouter([
       { path: '/how-docalign-works', element: <HowItWorksPage /> },
       { path: '/pricing', element: <PricingPage /> },
       { path: '/case-studies-2', element: <CaseStudiesPage /> },
+      { path: '/typesetting/', element: <TypesettingPage /> },
+      { path: '/about-us/', element: <AboutUsPage /> },
     ],
 
   },
