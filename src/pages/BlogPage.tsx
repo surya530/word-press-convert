@@ -1,64 +1,46 @@
-import { HiArrowRight } from 'react-icons/hi2'
-import PageHero from '../components/PageHero'
+import { Link } from 'react-router-dom'
+import linotypeImg from '../images/LINOTYPE_Composing_Machine_1889-300x254.jpg'
 
 const posts = [
   {
-    date: 'June 12, 2026',
-    category: 'Automation',
-    title: 'How Geometry-Based Typesetting Cuts Turnaround Time in Half',
+    image: linotypeImg,
+    title: 'The Linotype Machine',
+    date: 'February 7, 2024',
     excerpt:
-      'A look under the hood at how automated, measurement-driven layout lets us go from manuscript to print-ready file in days, not weeks.',
-    gradient: 'from-[#0d2b4e] to-[#1a6b78]',
+      'The Linotype machine was a revolutionary mechanical typesetting device that played a significant role in the history of printing and publishing newspapers, magazines, and books.',
   },
   {
-    date: 'May 28, 2026',
-    category: 'Publishing',
-    title: 'Fiction Without Friction: Streamlining Multi-Format Releases',
+    title: 'Typesetting yesterday, today, and tomorrow',
+    date: 'November 3, 2023',
     excerpt:
-      'Why publishing simultaneously to Print PDF, EPUB, and HTML5 no longer means tripling your production cost.',
-    gradient: 'from-[#1a6b78] to-[#5b9bd5]',
-  },
-  {
-    date: 'May 9, 2026',
-    category: 'Case Study',
-    title: 'Inside a 4-Hour Turnaround: Repeat Editions Done Right',
-    excerpt:
-      'How a well-prepared source file and a repeatable house style let one publisher hit same-day turnarounds.',
-    gradient: 'from-[#5b9bd5] to-[#c2255c]',
+      'From its beginnings to the modern digital era, typesetting has made an essential contribution to the dissemination of knowledge, ideas, and culture, and it will continue to do so in the future.',
   },
 ]
 
 export default function BlogPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 sm:px-12 sm:py-20 lg:px-8">
-      <PageHero
-        eyebrow="Insights"
-        title="Blog"
-        subtitle="News, tips, and updates from the DocAlign team."
-      />
+      <div className="mb-10 text-center">
+        <h1 className="text-2xl font-bold text-[#1a6b78] sm:text-3xl">Typesetting Explained</h1>
+        <p className="mt-1 text-2xl font-bold text-[#1a6b78] sm:text-3xl">The Blog</p>
+      </div>
 
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <h2 className="mb-6 text-xl font-bold text-[#0d2b4e]">Posts:</h2>
+
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
         {posts.map((post) => (
-          <article
-            key={post.title}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
-          >
-            <div className={`h-36 bg-linear-to-br ${post.gradient}`} />
-            <div className="flex flex-1 flex-col p-6">
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wide">
-                <span className="text-[#e8722a]">{post.category}</span>
-                <span className="text-gray-400">{post.date}</span>
-              </div>
-              <h2 className="mt-3 text-lg font-bold text-[#0d2b4e] leading-snug">{post.title}</h2>
-              <p className="mt-3 flex-1 text-sm text-gray-600 leading-relaxed">{post.excerpt}</p>
-              <a
-                href="#"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1a6b78] transition-colors group-hover:text-[#e8722a]"
-              >
-                Read more
-                <HiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
-            </div>
+          <article key={post.title}>
+            {post.image && (
+              <img src={post.image} alt={post.title} className="mb-4 w-full max-w-xs rounded" />
+            )}
+            <Link to="#" className="text-lg font-bold text-[#5b9bd5] hover:underline sm:text-xl">
+              {post.title}
+            </Link>
+            <p className="mt-1 text-xs text-gray-400">{post.date} /// No Comments</p>
+            <p className="mt-3 text-sm leading-relaxed text-gray-700 sm:text-base">{post.excerpt}</p>
+            <Link to="#" className="mt-3 inline-block text-sm font-bold text-[#c2255c] hover:underline">
+              Read More »
+            </Link>
           </article>
         ))}
       </div>

@@ -1,10 +1,6 @@
 import PageHero from '../components/PageHero'
-
-const outputFormats = ['Print PDF', 'Online PDF', 'EPUB (eBook)', 'AZW (Amazon eBook)', 'HTML', 'Other']
-
-const publicationTypes = ['Book', 'Magazine', 'Trade Journal', 'Catalog', 'Other']
-
-const volumeOptions = ['1 - 50 pages', '51 - 200 pages', '201 - 500 pages', '500+ pages']
+import { useAppSelector } from '../store/hooks'
+import { contactUsTranslations } from '../translations/contactUs'
 
 const inputClasses =
   'w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 transition-colors focus:border-[#0d2b4e] focus:bg-white focus:outline-none focus:ring-4 focus:ring-[#0d2b4e]/10'
@@ -12,49 +8,48 @@ const inputClasses =
 const labelClasses = 'block text-sm font-medium text-gray-700 mb-1.5'
 
 export default function ContactUsPage() {
+  const language = useAppSelector((state) => state.language.current)
+  const t = contactUsTranslations[language]
+
   return (
     <div className="bg-linear-to-b from-gray-50 to-white px-6 py-16 sm:px-12 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        <PageHero
-          eyebrow="Get In Touch"
-          title="Contact Us"
-          subtitle="Please provide us with some information about your company — this will help us to find the best solution for you."
-        />
+        <PageHero eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
 
         <form className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xl shadow-gray-200/50 sm:p-10">
           <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
             <div className="space-y-6">
               <div>
                 <label htmlFor="name" className={labelClasses}>
-                  Your Name
+                  {t.labels.name}
                 </label>
-                <input id="name" type="text" placeholder="John Doe" className={inputClasses} />
+                <input id="name" type="text" placeholder={t.placeholders.name} className={inputClasses} />
               </div>
 
               <div>
                 <label htmlFor="company" className={labelClasses}>
-                  Company
+                  {t.labels.company}
                 </label>
-                <input id="company" type="text" placeholder="Your company name" className={inputClasses} />
+                <input id="company" type="text" placeholder={t.placeholders.company} className={inputClasses} />
               </div>
 
               <div>
                 <label htmlFor="email" className={labelClasses}>
-                  E-mail
+                  {t.labels.email}
                 </label>
-                <input id="email" type="email" placeholder="you@example.com" className={inputClasses} />
+                <input id="email" type="email" placeholder={t.placeholders.email} className={inputClasses} />
               </div>
 
               <div>
                 <label htmlFor="phone" className={labelClasses}>
-                  Phone
+                  {t.labels.phone}
                 </label>
-                <input id="phone" type="tel" placeholder="+49 30 740 73960" className={inputClasses} />
+                <input id="phone" type="tel" placeholder={t.placeholders.phone} className={inputClasses} />
               </div>
 
               <div>
                 <label htmlFor="sample-file" className={labelClasses}>
-                  Sample File
+                  {t.labels.sampleFile}
                 </label>
                 <label
                   htmlFor="sample-file"
@@ -69,7 +64,8 @@ export default function ContactUsPage() {
                     />
                   </svg>
                   <span className="text-sm text-gray-500">
-                    <span className="font-semibold text-[#0d2b4e]">Click to upload</span> a sample file
+                    <span className="font-semibold text-[#0d2b4e]">{t.labels.uploadPrompt}</span>
+                    {t.labels.uploadSuffix}
                   </span>
                   <input id="sample-file" type="file" className="sr-only" />
                 </label>
@@ -79,13 +75,13 @@ export default function ContactUsPage() {
             <div className="space-y-6">
               <div>
                 <label htmlFor="publication-type" className={labelClasses}>
-                  Type of Publication
+                  {t.labels.publicationType}
                 </label>
                 <select id="publication-type" defaultValue="" className={inputClasses}>
                   <option value="" disabled>
-                    Please choose an option
+                    {t.labels.chooseOption}
                   </option>
-                  {publicationTypes.map((type) => (
+                  {t.publicationTypes.map((type) => (
                     <option key={type} value={type}>
                       {type}
                     </option>
@@ -94,9 +90,9 @@ export default function ContactUsPage() {
               </div>
 
               <div>
-                <span className={labelClasses}>Output format</span>
+                <span className={labelClasses}>{t.labels.outputFormat}</span>
                 <div className="grid grid-cols-2 gap-2">
-                  {outputFormats.map((format) => (
+                  {t.outputFormats.map((format) => (
                     <label
                       key={format}
                       className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-700 transition-colors has-checked:border-[#0d2b4e] has-checked:bg-[#0d2b4e]/5"
@@ -113,13 +109,13 @@ export default function ContactUsPage() {
 
               <div>
                 <label htmlFor="volume" className={labelClasses}>
-                  Volume
+                  {t.labels.volume}
                 </label>
                 <select id="volume" defaultValue="" className={inputClasses}>
                   <option value="" disabled>
-                    Please choose an option
+                    {t.labels.chooseOption}
                   </option>
-                  {volumeOptions.map((volume) => (
+                  {t.volumeOptions.map((volume) => (
                     <option key={volume} value={volume}>
                       {volume}
                     </option>
@@ -131,19 +127,19 @@ export default function ContactUsPage() {
 
           <div className="mt-6">
             <label htmlFor="comments" className={labelClasses}>
-              Additional comments/questions
+              {t.labels.comments}
             </label>
             <textarea
               id="comments"
               rows={5}
-              placeholder="Tell us a bit more about your project..."
+              placeholder={t.placeholders.comments}
               className={`${inputClasses} resize-none`}
             />
           </div>
 
           <div className="mt-8 flex flex-col items-start gap-4 border-t border-gray-100 pt-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <span className={labelClasses}>Verify you're human</span>
+              <span className={labelClasses}>{t.labels.verifyHuman}</span>
               <div className="flex items-center gap-3">
                 <div className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-gray-50 px-4 py-1.5 select-none">
                   <span
@@ -153,7 +149,12 @@ export default function ContactUsPage() {
                     B9 T6
                   </span>
                 </div>
-                <input id="captcha" type="text" placeholder="Enter code" className={`${inputClasses} max-w-35`} />
+                <input
+                  id="captcha"
+                  type="text"
+                  placeholder={t.placeholders.captcha}
+                  className={`${inputClasses} max-w-35`}
+                />
               </div>
             </div>
 
@@ -161,7 +162,7 @@ export default function ContactUsPage() {
               type="submit"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0d2b4e] px-8 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0d2b4e]/20 transition-all hover:-translate-y-0.5 hover:bg-[#e8722a] hover:shadow-xl"
             >
-              Submit
+              {t.submit}
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

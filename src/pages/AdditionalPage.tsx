@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
   HiOutlineLanguage,
   HiOutlineSwatch,
@@ -7,6 +8,9 @@ import {
   HiOutlineChartBar,
 } from 'react-icons/hi2'
 import PageHero from '../components/PageHero'
+import bookImg from '../images/reading-books-pnz85o4yc6zr3xsz6arh7k3ohyoau0mrzn4eoobeyw.png'
+import { useAppSelector } from '../store/hooks'
+import { additionalTranslations } from '../translations/additional'
 
 const services = [
   {
@@ -42,15 +46,29 @@ const services = [
 ]
 
 export default function AdditionalPage() {
+  const language = useAppSelector((state) => state.language.current)
+  const t = additionalTranslations[language]
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 sm:px-12 sm:py-20 lg:px-8">
-      <PageHero
-        eyebrow="More From DocAlign"
-        title="Additional Services"
-        subtitle="Explore the additional services we offer alongside typesetting, formatting, and custom software solutions."
-      />
+      <PageHero eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mb-16 grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="border-l-4 border-[#0d2b4e] rounded-l-sm py-1 pl-6">
+          <p className="text-sm leading-relaxed text-[#0d2b4e] sm:text-base">{t.intro}</p>
+          <p className="mt-5 text-sm font-medium text-[#c2255c] sm:text-base">
+            {t.ctaPrefix}
+            <Link to="/contact-us" className="hover:underline">
+              {t.ctaLinkLabel}
+            </Link>
+            {t.ctaSuffix}
+          </p>
+        </div>
+
+        <img src={bookImg} alt="People researching among stacks of books" className="mx-auto w-full max-w-md" />
+      </div>
+
+      {/* <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
           <div
             key={service.title}
@@ -63,7 +81,7 @@ export default function AdditionalPage() {
             <p className="text-sm text-gray-600 leading-relaxed">{service.body}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }
