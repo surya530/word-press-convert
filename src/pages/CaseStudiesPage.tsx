@@ -16,20 +16,23 @@ export default function CaseStudiesPage() {
       <h2 className="mb-6 text-xl font-bold text-[#0d2b4e]">{t.postsLabel}</h2>
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-        {t.posts.map((post) => (
-          <article key={post.title}>
-            <Link to="#" className="text-lg font-bold text-[#5b9bd5] hover:underline sm:text-xl">
-              {post.title}
-            </Link>
-            <p className="mt-1 text-xs text-gray-400">
-              {post.date} /// {post.noComments}
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-gray-700 sm:text-base">{post.excerpt}</p>
-            <Link to="#" className="mt-3 inline-block text-sm font-bold text-[#c2255c] hover:underline">
-              {post.readMore}
-            </Link>
-          </article>
-        ))}
+        {t.posts.map((post) => {
+          const href = post.slug ? `/${post.slug}` : '#'
+          return (
+            <article key={post.title}>
+              <Link to={href} className="text-lg font-bold text-[#5b9bd5] hover:underline sm:text-xl">
+                {post.title}
+              </Link>
+              <p className="mt-1 text-xs text-gray-400">
+                {post.date} /// {post.noComments}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-gray-700 sm:text-base">{post.excerpt}</p>
+              <Link to={href} className="mt-3 inline-block text-sm font-bold text-[#c2255c] hover:underline">
+                {post.readMore}
+              </Link>
+            </article>
+          )
+        })}
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import MainLayout from './layout/MainLayout';
 import HomePage from './pages/homePage';
 import ContactUsPage from './pages/ContactUsPage';
@@ -8,6 +9,8 @@ import BlogPage from './pages/BlogPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import PricingPage from './pages/PricingPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
+import LooseLeafCaseStudyPage from './pages/LooseLeafCaseStudyPage';
+import StampCatalogueCaseStudyPage from './pages/StampCatalogueCaseStudyPage';
 import TypesettingPage from './pages/TypesettingPage';
 import AboutUsPage from './pages/AboutUsPage';
 import "slick-carousel/slick/slick.css";
@@ -35,7 +38,19 @@ const router = createBrowserRouter([
       { path: '/how-docalign-works', element: <HowItWorksPage /> },
       { path: '/pricing', element: <PricingPage /> },
       { path: '/case-studies-2', element: <CaseStudiesPage /> },
-      { path: '/typesetting/', element: <TypesettingPage /> },
+      {
+        path: '/2024/08/23/a-client-success-story-loose-leaf-system-company-improving-typesetting-efficiency-for-loose-leaf-systems-with-docalign/',
+        element: <LooseLeafCaseStudyPage />,
+      },
+      {
+        path: '/de/2024/08/28/b/',
+        element: <LooseLeafCaseStudyPage />,
+      },
+      {
+        path: '/2024/07/22/transforming-stamp-catalogue-creation-with-docalign/',
+        element: <StampCatalogueCaseStudyPage />,
+      },
+      { path: '/typesetting', element: <TypesettingPage /> },
       { path: '/about-us/', element: <AboutUsPage /> },
     ],
 
@@ -46,6 +61,13 @@ const router = createBrowserRouter([
   }
 )
 
+
+
 export default function App() {
-  return <RouterProvider router={router} />
+  return (
+    <>
+      <Toaster position="top-right" />
+      <RouterProvider router={router} />
+    </>
+  )
 }

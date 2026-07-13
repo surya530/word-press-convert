@@ -1,3 +1,5 @@
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import PageHero from '../components/PageHero'
 import { useAppSelector } from '../store/hooks'
 import { contactUsTranslations } from '../translations/contactUs'
@@ -11,40 +13,102 @@ export default function ContactUsPage() {
   const language = useAppSelector((state) => state.language.current)
   const t = contactUsTranslations[language]
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const sampleFile = formData.get('sample-file')
+    const data = {
+      name: formData.get('name'),
+      company: formData.get('company'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      sampleFile: sampleFile instanceof File && sampleFile.size > 0 ? sampleFile : null,
+      publicationType: formData.get('publication-type'),
+      outputFormats: formData.getAll('output-format'),
+      volume: formData.get('volume'),
+      comments: formData.get('comments'),
+      captcha: formData.get('captcha'),
+    }
+
+    // console.log(data)
+
+    try {
+      const { sampleFile: _sampleFile, ...payload } = data
+      const response = await axios.post('http://localhost:8000/apis/v1/issues/send-email', payload)
+      const message = typeof response.data === 'string' ? response.data : response.data?.message ?? 'Success'
+      toast.success(message, { style: { background: '#16a34a', color: '#fff' } })
+    } catch (error) {
+      // let _message : any = axios.isAxiosError(error) ? error.response?.data ?? error.message : String(error)
+      // alert(`Request failed: ${typeof message === 'string' ? message : JSON.stringify(message)}`)
+      toast.success( "Error occurred while processing your request." , { style: { background: '#FF0000', color: '#fff' } })
+    }
+  }
+
   return (
     <div className="bg-linear-to-b from-gray-50 to-white px-6 py-16 sm:px-12 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-5xl">
         <PageHero eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
 
-        <form className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xl shadow-gray-200/50 sm:p-10">
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xl shadow-gray-200/50 sm:p-10"
+        >
           <div className="grid grid-cols-1 gap-x-10 gap-y-6 lg:grid-cols-2">
             <div className="space-y-6">
               <div>
                 <label htmlFor="name" className={labelClasses}>
-                  {t.labels.name}
+                  {t.labels.name} <span className="text-red-500">*</span>
                 </label>
-                <input id="name" type="text" placeholder={t.placeholders.name} className={inputClasses} />
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder={t.placeholders.name}
+                  className={inputClasses}
+                />
               </div>
 
               <div>
                 <label htmlFor="company" className={labelClasses}>
-                  {t.labels.company}
+                  {t.labels.company} <span className="text-red-500">*</span>
                 </label>
-                <input id="company" type="text" placeholder={t.placeholders.company} className={inputClasses} />
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  required
+                  placeholder={t.placeholders.company}
+                  className={inputClasses}
+                />
               </div>
 
               <div>
                 <label htmlFor="email" className={labelClasses}>
-                  {t.labels.email}
+                  {t.labels.email} <span className="text-red-500">*</span>
                 </label>
-                <input id="email" type="email" placeholder={t.placeholders.email} className={inputClasses} />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder={t.placeholders.email}
+                  className={inputClasses}
+                />
               </div>
 
               <div>
                 <label htmlFor="phone" className={labelClasses}>
                   {t.labels.phone}
                 </label>
-                <input id="phone" type="tel" placeholder={t.placeholders.phone} className={inputClasses} />
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder={t.placeholders.phone}
+                  className={inputClasses}
+                />
               </div>
 
               <div>
@@ -67,7 +131,7 @@ export default function ContactUsPage() {
                     <span className="font-semibold text-[#0d2b4e]">{t.labels.uploadPrompt}</span>
                     {t.labels.uploadSuffix}
                   </span>
-                  <input id="sample-file" type="file" className="sr-only" />
+                  <input id="sample-file" name="sample-file" type="file" className="sr-only" />
                 </label>
               </div>
             </div>
@@ -77,7 +141,7 @@ export default function ContactUsPage() {
                 <label htmlFor="publication-type" className={labelClasses}>
                   {t.labels.publicationType}
                 </label>
-                <select id="publication-type" defaultValue="" className={inputClasses}>
+                <select id="publication-type" name="publication-type" defaultValue="" className={inputClasses}>
                   <option value="" disabled>
                     {t.labels.chooseOption}
                   </option>
@@ -99,6 +163,8 @@ export default function ContactUsPage() {
                     >
                       <input
                         type="checkbox"
+                        name="output-format"
+                        value={format}
                         className="h-4 w-4 rounded border-gray-300 text-[#0d2b4e] focus:ring-[#0d2b4e]/40"
                       />
                       {format}
@@ -111,7 +177,7 @@ export default function ContactUsPage() {
                 <label htmlFor="volume" className={labelClasses}>
                   {t.labels.volume}
                 </label>
-                <select id="volume" defaultValue="" className={inputClasses}>
+                <select id="volume" name="volume" defaultValue="" className={inputClasses}>
                   <option value="" disabled>
                     {t.labels.chooseOption}
                   </option>
@@ -131,6 +197,7 @@ export default function ContactUsPage() {
             </label>
             <textarea
               id="comments"
+              name="comments"
               rows={5}
               placeholder={t.placeholders.comments}
               className={`${inputClasses} resize-none`}
@@ -151,6 +218,7 @@ export default function ContactUsPage() {
                 </div>
                 <input
                   id="captcha"
+                  name="captcha"
                   type="text"
                   placeholder={t.placeholders.captcha}
                   className={`${inputClasses} max-w-35`}

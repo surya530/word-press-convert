@@ -4,6 +4,7 @@ export interface CaseStudyPost {
   noComments: string
   excerpt: string
   readMore: string
+  slug?: string
 }
 
 export interface CaseStudiesTranslation {
@@ -27,6 +28,7 @@ export const caseStudiesTranslations: Record<'en' | 'de', CaseStudiesTranslation
         excerpt:
           'A Client Success Story: Improving Typesetting Efficiency for Loose-Leaf Systems with docAlign Overview of the Company docAlign is a leader in fully automated book typesetting',
         readMore: 'Read More »',
+        slug: '2024/08/23/a-client-success-story-loose-leaf-system-company-improving-typesetting-efficiency-for-loose-leaf-systems-with-docalign/',
       },
       {
         title: 'Transforming Stamp Catalogue Creation with DocAlign',
@@ -35,6 +37,7 @@ export const caseStudiesTranslations: Record<'en' | 'de', CaseStudiesTranslation
         excerpt:
           'Case Study: Transforming Stamp Catalogue Creation with docAlign Overview of docAlign At docAlign, we specialize in document automation and management solutions, helping businesses streamline their',
         readMore: 'Read More »',
+        slug: '2024/07/22/transforming-stamp-catalogue-creation-with-docalign/',
       },
     ],
   },
@@ -50,6 +53,7 @@ export const caseStudiesTranslations: Record<'en' | 'de', CaseStudiesTranslation
         excerpt:
           'Eine Erfolgsgeschichte: Verbesserung der Schriftsatzeffizienz für Loseblattsysteme mit docAlign Zusammenfassung Die innovative Satzlösung von docAlign hat einem führenden Unternehmen für Loseblattsysteme geholfen, seinen Dokumentformatierungsprozess zu',
         readMore: 'Read More »',
+        slug: 'de/2024/08/28/b/',
       },
       {
         title: 'Transformation der Briefmarkenkatalog-Erstellung mit DocAlign',
