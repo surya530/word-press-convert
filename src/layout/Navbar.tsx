@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../images/docalign-pnz85o4s8x1va7og9rruwpsvi6u966jrvexgy56ry8.png'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
@@ -8,7 +8,18 @@ import { layoutTranslations } from '../translations/layout'
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const dispatch = useAppDispatch()
+
+  const openMenuNow = (label: string) => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
+    setOpenMenu(label)
+  }
+
+  const closeMenuSoon = () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
+    closeTimeoutRef.current = setTimeout(() => setOpenMenu(null), 150)
+  }
   const language = useAppSelector((state) => state.language.current)
   const t = layoutTranslations[language]
 
@@ -60,8 +71,8 @@ export default function Navbar() {
             <div
               key={item.label}
               className="relative"
-              onMouseEnter={() => item.children && setOpenMenu(item.label)}
-              onMouseLeave={() => setOpenMenu(null)}
+              onMouseEnter={() => item.children && openMenuNow(item.label)}
+              onMouseLeave={() => item.children && closeMenuSoon()}
             >
               {item.to ? (
                 <Link
@@ -86,26 +97,30 @@ export default function Navbar() {
                 </button>
               )}
               {item.children && openMenu === item.label && (
-                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-100 rounded-lg shadow-lg py-1 min-w-[180px]">
-                  {item.children.map((child) =>
-                    child.to ? (
-                      <Link
-                        key={child.label}
-                        to={child.to}
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#e8722a] transition-colors"
-                      >
-                        {child.label}
-                      </Link>
-                    ) : (
-                      <a
-                        key={child.label}
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#e8722a] transition-colors"
-                      >
-                        {child.label}
-                      </a>
-                    ),
-                  )}
+                <div className="absolute top-full left-0 pt-2 min-w-[180px]">
+                  <div className="bg-white border border-gray-100 rounded-lg shadow-lg py-1">
+                    {item.children.map((child) =>
+                      child.to ? (
+                        <Link
+                          key={child.label}
+                          to={child.to}
+                          onClick={() => setOpenMenu(null)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#e8722a] transition-colors"
+                        >
+                          {child.label}
+                        </Link>
+                      ) : (
+                        <a
+                          key={child.label}
+                          href="#"
+                          onClick={() => setOpenMenu(null)}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#e8722a] transition-colors"
+                        >
+                          {child.label}
+                        </a>
+                      ),
+                    )}
+                  </div>
                 </div>
               )}
             </div>
