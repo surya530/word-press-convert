@@ -8,12 +8,14 @@ const posts = [
     date: 'February 7, 2024',
     excerpt:
       'The Linotype machine was a revolutionary mechanical typesetting device that played a significant role in the history of printing and publishing newspapers, magazines, and books.',
+    link: '/2024/02/07/linotype-machine/',
   },
   {
     title: 'Typesetting yesterday, today, and tomorrow',
     date: 'November 3, 2023',
     excerpt:
       'From its beginnings to the modern digital era, typesetting has made an essential contribution to the dissemination of knowledge, ideas, and culture, and it will continue to do so in the future.',
+    link: '/2023/11/03/book-typesetting-yesterday-today-and-tomorrow/',
   },
 ]
 
@@ -33,12 +35,18 @@ export default function BlogPage() {
             {post.image && (
               <img src={post.image} alt={post.title} className="mb-4 w-full max-w-xs rounded" />
             )}
-            <Link to="#" className="text-lg font-bold text-[#5b9bd5] hover:underline sm:text-xl">
+            <Link
+              to={post.link ?? '#'}
+              className="text-lg font-bold text-[#5b9bd5] hover:underline sm:text-xl"
+            >
               {post.title}
             </Link>
             <p className="mt-1 text-xs text-gray-400">{post.date} /// No Comments</p>
             <p className="mt-3 text-sm leading-relaxed text-gray-700 sm:text-base">{post.excerpt}</p>
-            <Link to="#" className="mt-3 inline-block text-sm font-bold text-[#c2255c] hover:underline">
+            <Link
+              to={post.link ?? '#'}
+              className="mt-3 inline-block text-sm font-bold text-[#c2255c] hover:underline"
+            >
               Read More »
             </Link>
           </article>

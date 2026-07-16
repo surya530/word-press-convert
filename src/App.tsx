@@ -13,6 +13,8 @@ import LooseLeafCaseStudyPage from './pages/LooseLeafCaseStudyPage';
 import StampCatalogueCaseStudyPage from './pages/StampCatalogueCaseStudyPage';
 import TypesettingPage from './pages/TypesettingPage';
 import AboutUsPage from './pages/AboutUsPage';
+import BookTypesettingBlogPage from './pages/BookTypesettingBlogPage';
+import LinotypeMachineBlogPage from './pages/LinotypeMachineBlogPage';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       },
       { path: '/typesetting', element: <TypesettingPage /> },
       { path: '/about-us/', element: <AboutUsPage /> },
+      {
+        path: '/2023/11/03/book-typesetting-yesterday-today-and-tomorrow/',
+        element: <BookTypesettingBlogPage />,
+      },
+      {
+        path: '/2024/02/07/linotype-machine/',
+        element: <LinotypeMachineBlogPage />,
+      },
     ],
 
   },
