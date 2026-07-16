@@ -1,5 +1,6 @@
 export interface LayoutTranslation {
   nav: {
+    home: string
     typesetting: string
     howItWorks: string
     pricing: string
@@ -27,6 +28,7 @@ export interface LayoutTranslation {
 export const layoutTranslations: Record<'en' | 'de', LayoutTranslation> = {
   en: {
     nav: {
+      home: 'Home',
       typesetting: 'Typesetting and Formatting',
       howItWorks: 'How It Works',
       pricing: 'Pricing',
@@ -53,6 +55,7 @@ export const layoutTranslations: Record<'en' | 'de', LayoutTranslation> = {
   },
   de: {
     nav: {
+      home: 'Startseite',
       typesetting: 'Satz und Formatierung',
       howItWorks: 'So funktioniert es',
       pricing: 'Preise',

@@ -61,9 +61,9 @@ export default function Navbar() {
       {/* Main nav */}
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img src={logo} alt="DocAlign" className="h-10 w-auto" />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-6">
@@ -126,6 +126,14 @@ export default function Navbar() {
             </div>
           ))}
 
+          {/* Home button */}
+          <Link
+            to="/"
+            className="px-4 py-1.5 text-sm font-medium text-white bg-[#0d2b4e] rounded-full hover:bg-[#e8722a] transition-colors whitespace-nowrap"
+          >
+            {t.nav.home}
+          </Link>
+
           {/* Language toggle */}
           <div className="flex items-center ml-4 border border-gray-200 rounded-full overflow-hidden text-xs font-semibold">
             {(['en', 'de'] as const).map((l) => (
@@ -163,6 +171,13 @@ export default function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden border-t border-gray-100 bg-white">
+          <Link
+            to="/"
+            onClick={() => setMobileOpen(false)}
+            className="block px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-[#e8722a]"
+          >
+            {t.nav.home}
+          </Link>
           {navItems.map((item) => (
             <div key={item.label}>
               {item.to ? (
